@@ -9,6 +9,7 @@ const countryList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
 
 const DEBOUNCE_DELAY = 300;
+
 const searcCountries = event => {
   const searchTerm = searchBox.value.trim();
 
@@ -26,30 +27,42 @@ const searcCountries = event => {
 
 function countriesData(data) {
   if (data.length > 10) {
+    clearData(countryList);
+    clearData(countryInfo);
     Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
     );
   } else if (data.length > 1 && data.length <= 10) {
+    // clearData(countryList);
+    clearData(countryInfo);
     return (countryList.innerHTML = data.map(
       item =>
         `<ul class="country">
-                <li><img width=50px src ='${item.flags.svg}' /></li>
-                <li><p>'${item.name}'</p></li>
+                <li><img width=50px src =${item.flags.svg} /></li>
+                <li><p>${item.name}</p></li>
                 
-                </ul>`
+        </ul>`
     )).join('');
+  } else if (searchBox.value === '') {
+    clearData(countryList);
+    clearData(countryInfo);
   } else {
+    clearData(countryList);
+    // clearData(countryInfo);
     return (countryInfo.innerHTML = data.map(
       item =>
         `<ul class="country">
-        <li><h3>'${item.name}'</h3></li>
-                <li><img width=100px src ='${item.flags.svg}' /></li>
-                <li><p>Capital :'${item.capital}'</p></li>
-                <li><p>Population :'${item.population.toLocaleString()}'</p></li>
-             <li>Languages :'${item.languages[0].name}'</li>
+        <li><h3>${item.name}</h3></li>
+                <li><img width=100px src =${item.flags.svg} /></li>
+                <li><p>Capital :${item.capital}</p></li>
+                <li><p>Population :${item.population}</p></li>
+                <li>Languages :${item.languages[0].name}</li>
                 </ul>`
     )).join('');
   }
+}
+function clearData(input) {
+  input.innerHTML = '';
 }
 searchBox.addEventListener('input', debounce(searcCountries, DEBOUNCE_DELAY));
 
