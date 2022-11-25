@@ -33,31 +33,33 @@ function countriesData(data) {
       'Too many matches found. Please enter a more specific name.'
     );
   } else if (data.length > 1 && data.length <= 10) {
-    // clearData(countryList);
-    clearData(countryInfo);
-    return (countryList.innerHTML = data.map(
-      item =>
-        `<ul class="country">
-                <li><img width=50px src =${item.flags.svg} /></li>
-                <li><p>${item.name}</p></li>
-                
-        </ul>`
-    )).join('');
-  } else if (searchBox.value === '') {
     clearData(countryList);
     clearData(countryInfo);
+    return (countryList.innerHTML = data
+      .map(
+        item =>
+          `<div class="country">
+                <img width=50px src =${item.flags.svg} />
+                <p>${item.name}</p>
+                
+        </div>`
+      )
+      .join(''));
+    // } else if (searchBox.value === '') {
+    //   clearData(countryList);
+    //   clearData(countryInfo);
   } else {
     clearData(countryList);
-    // clearData(countryInfo);
+    clearData(countryInfo);
     return (countryInfo.innerHTML = data.map(
       item =>
-        `<ul class="country">
-        <li><h3>${item.name}</h3></li>
-                <li><img width=100px src =${item.flags.svg} /></li>
-                <li><p>Capital :${item.capital}</p></li>
-                <li><p>Population :${item.population}</p></li>
-                <li>Languages :${item.languages[0].name}</li>
-                </ul>`
+        `<div class="country">
+        <h3>${item.name}</h3>
+                <img width=100px src =${item.flags.svg} />
+                <p>Capital :${item.capital}</p>
+                <p>Population :${item.population}</p>
+                <p>Languages :${item.languages[0].name}</p>
+                </div>`
     )).join('');
   }
 }
