@@ -11,19 +11,39 @@ const countryInfo = document.querySelector('.country-info');
 const DEBOUNCE_DELAY = 300;
 
 const searcCountries = event => {
+  event.preventDefault();
   const searchTerm = searchBox.value.trim();
-
-  fetchCountries(searchTerm)
+ if(searchTerm !== " "){
+     fetchCountries(searchTerm)
     .then(data => {
       countriesData(data);
     })
     .catch(err => {
-      if (searchTerm !== '') {
+      
+        clearData(countryList);
+        clearData(countryInfo);
         Notiflix.Notify.failure('Oops, there is no country with that name');
-      }
+      
     });
-  event.preventDefault();
-};
+    
+   }}
+//    clearData(countryList);
+//    clearData(countryList);
+//    Notiflix.Notify.failure('Oops, there is no country with that name')
+//  }
+  // fetchCountries(searchTerm)
+  //   .then(data => {
+  //     countriesData(data);
+  //   })
+  //   .catch(err => {
+  //     if (searchTerm !== '') {
+  //       clearData(countryList);
+  //       clearData(countryInfo);
+  //       Notiflix.Notify.failure('Oops, there is no country with that name');
+  //     }
+  //   });
+  // event.preventDefault();
+;
 
 function countriesData(data) {
   if (data.length > 10) {
@@ -38,28 +58,26 @@ function countriesData(data) {
     return (countryList.innerHTML = data
       .map(
         item =>
-          `<div class="country">
+          `<li class="country">
                 <img width=50px src =${item.flags.svg} />
                 <p>${item.name}</p>
                 
-        </div>`
+        </li>`
       )
       .join(''));
-    // } else if (searchBox.value === '') {
-    //   clearData(countryList);
-    //   clearData(countryInfo);
+
   } else {
     clearData(countryList);
     clearData(countryInfo);
     return (countryInfo.innerHTML = data.map(
       item =>
-        `<div class="country">
+        `<li class="country">
         <h3>${item.name}</h3>
                 <img width=100px src =${item.flags.svg} />
                 <p>Capital :${item.capital}</p>
                 <p>Population :${item.population}</p>
                 <p>Languages :${item.languages[0].name}</p>
-                </div>`
+                </li>`
     )).join('');
   }
 }
