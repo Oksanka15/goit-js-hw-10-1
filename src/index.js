@@ -11,22 +11,22 @@ const countryInfo = document.querySelector('.country-info');
 const DEBOUNCE_DELAY = 300;
 
 const searhCountries = event => {
-  event.preventDefault();
-
-  const searchTerm = event.target.value.trim();
-  if (searchTerm !== '') {
-    fetchCountries(searchTerm)
   
+
+  const searchTerm = searchBox.value.trim();
+  if (searchTerm !== '') {
+   fetchCountries(searchTerm)
+
       .then(data => {
         countriesData(data);
       })
       .catch(error => {
-        clearData(countryList);
-        clearData(countryInfo);
       
         Notiflix.Notify.failure('Oops, there is no country with that name');
-      });
+        clearData(countryList);
+        clearData(countryInfo); });
   }
+  event.preventDefault();
 };
 
 function countriesData(data) {
