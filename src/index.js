@@ -10,40 +10,24 @@ const countryInfo = document.querySelector('.country-info');
 
 const DEBOUNCE_DELAY = 300;
 
-const searcCountries = event => {
+const searhCountries = event => {
   event.preventDefault();
-  const searchTerm = searchBox.value.trim();
- if(searchTerm !== " "){
-     fetchCountries(searchTerm)
-    .then(data => {
-      countriesData(data);
-    })
-    .catch(err => {
-      
+
+  const searchTerm = event.target.value.trim();
+  if (searchTerm !== '') {
+    fetchCountries(searchTerm)
+  
+      .then(data => {
+        countriesData(data);
+      })
+      .catch(error => {
         clearData(countryList);
         clearData(countryInfo);
-        Notiflix.Notify.failure('Oops, there is no country with that name');
       
-    });
-    
-   }}
-//    clearData(countryList);
-//    clearData(countryList);
-//    Notiflix.Notify.failure('Oops, there is no country with that name')
-//  }
-  // fetchCountries(searchTerm)
-  //   .then(data => {
-  //     countriesData(data);
-  //   })
-  //   .catch(err => {
-  //     if (searchTerm !== '') {
-  //       clearData(countryList);
-  //       clearData(countryInfo);
-  //       Notiflix.Notify.failure('Oops, there is no country with that name');
-  //     }
-  //   });
-  // event.preventDefault();
-;
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      });
+  }
+};
 
 function countriesData(data) {
   if (data.length > 10) {
@@ -65,7 +49,6 @@ function countriesData(data) {
         </li>`
       )
       .join(''));
-
   } else {
     clearData(countryList);
     clearData(countryInfo);
@@ -84,6 +67,6 @@ function countriesData(data) {
 function clearData(input) {
   input.innerHTML = '';
 }
-searchBox.addEventListener('input', debounce(searcCountries, DEBOUNCE_DELAY));
+searchBox.addEventListener('input', debounce(searhCountries, DEBOUNCE_DELAY));
 
 document.querySelector('#search-box').placeholder = 'Search for any country...';
